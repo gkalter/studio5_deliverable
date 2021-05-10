@@ -41,8 +41,7 @@
     <p>Click anywhere on the map to see water sites within a 500m radius. Stand alone water sites will be highlighted in red.</p>
   </div>
   <script>
-    // Data showing water points - replace the dummy URL with your own.
-    var url = 'https://github.com/gkalter/studio5_deliverable/blob/main/docs/data/jordan.geojson'
+ 
 
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2thbHRlciIsImEiOiJja2xtcW0zZm0wYm40MndwNHN6YWxyamw2In0.Dccg4dRU1lILqq7qLqtSzg';
@@ -59,7 +58,7 @@
     id: 'OSM-water',
     source: {
       type: 'geojson',
-      data: url
+      data: 'data/jordan.geojson'
     },
     type: 'circle',
     paint: {
