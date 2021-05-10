@@ -42,7 +42,7 @@
   </div>
   <script>
     // Data showing water points - replace the dummy URL with your own.
-    var url = 'https://raw.githubusercontent.com/USERNAME/'
+    var url = 'data/jordan.geojson'
 
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2thbHRlciIsImEiOiJja2xtcW0zZm0wYm40MndwNHN6YWxyamw2In0.Dccg4dRU1lILqq7qLqtSzg';
@@ -59,7 +59,7 @@
     id: 'OSM-water',
     source: {
       type: 'geojson',
-      data: "jordan.geojson"
+      data: url
     },
     type: 'circle',
     paint: {
