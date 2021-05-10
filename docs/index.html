@@ -107,9 +107,12 @@ map.addLayer({
     //Click event goes here!
     map.on('click', function(e) {
       var eventLngLat = [e.lngLat.lng, e.lngLat.lat];
+      var searchRadius = makeRadius(eventLngLat, 500);
       var featuresInBuffer = spatialJoin('OSM-water', searchRadius);
       map.getSource('search-radius').setData(searchRadius);
-      console.log(eventLngLat)
+      map.getSource('selected-water').setData(turf.featureCollection(featuresInBuffer));
+
+      //console.log(eventLngLat)
     });
 
     //makeRadius function goes here!
