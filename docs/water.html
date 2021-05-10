@@ -42,7 +42,7 @@
   </div>
   <script>
     // Data showing water points - replace the dummy URL with your own.
-    var url = 'https://raw.githubusercontent.com/USERNAME/'
+    var url = 'https://github.com/gkalter/studio5_deliverable/blob/main/docs/data/jordan.geojson'
 
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2thbHRlciIsImEiOiJja2xtcW0zZm0wYm40MndwNHN6YWxyamw2In0.Dccg4dRU1lILqq7qLqtSzg';
@@ -100,11 +100,31 @@ map.addLayer({
 });
 
 
-    //Click event goes here!
+      //Click event goes here!
+    map.on('click', function(e) {
+      var eventLngLat = [e.lngLat.lng, e.lngLat.lat];
+      console.log(eventLngLat)
+    });
 
     //makeRadius function goes here!
+    function makeRadius(lngLatArray, radiusInMeters) {
+    var point = turf.point(lngLatArray);
+    var buffered = turf.buffer(point, radiusInMeters, { units: 'meters' });
+    return buffered;
+  }
 
     //spatialJoin function goes here!
+    function spatialJoin(sourceLayer, filterFeature) {
+      // Need this line to specify the array since map.getSource in the click event doesn't do this.
+      sourceGeoJSON = map.querySourceFeatures(sourceLayer);
+      // Loop through all the features in the source geojson and return the ones that
+      // are inside the filter feature (buffered radius) and are confirmed landing sites
+      var joined = sourceGeoJSON.filter(function (feature) {
+        return turf.booleanPointInPolygon(feature, filterFeature) && feature.properties.type === 'Free_standing';
+      });
+
+      return joined;
+    };
 
   </script>
 
