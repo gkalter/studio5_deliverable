@@ -41,7 +41,8 @@
     <p>Click anywhere on the map to see water sites within a 500m radius. Stand alone water sites will be highlighted in red.</p>
   </div>
   <script>
- 
+    // Data showing water points - replace the dummy URL with your own.
+    var url = 'https://raw.githubusercontent.com/USERNAME/'
 
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ2thbHRlciIsImEiOiJja2xtcW0zZm0wYm40MndwNHN6YWxyamw2In0.Dccg4dRU1lILqq7qLqtSzg';
@@ -58,7 +59,7 @@
     id: 'OSM-water',
     source: {
       type: 'geojson',
-      data: 'data/jordan.geojson'
+      data: "jordan.geojson"
     },
     type: 'circle',
     paint: {
@@ -68,40 +69,46 @@
       'circle-stroke-width': 1,
       'circle-stroke-color': '#0557fa',
     }
+
   });
+
   // When the map has finished loading, add a new layer that will be empty
-  // at first, but will eventually house our confirmed water sites.
-  map.addLayer({
-id: 'selected-water',
-source: {
-  type: 'geojson',
-  data: { "type": "FeatureCollection", "features": [] }
-},
-type: 'circle',
-paint: {
-  'circle-color': 'red',
-  'circle-radius': 3
-   }
-});
-// Draw the search radius on the map
+// at first, but will eventually house our confirmed water sites.
 map.addLayer({
-  id: 'search-radius',
+  id: 'selected-water',
   source: {
     type: 'geojson',
     data: { "type": "FeatureCollection", "features": [] }
   },
-  type: 'fill',
+  type: 'circle',
   paint: {
-    'fill-color': '#fcf683',
-    'fill-opacity': 0.5
-  }
-});
+    'circle-color': 'red',
+    'circle-radius': 3
+     }
 });
 
+//search radius
+     map.addLayer({
+       id: 'search-radius',
+       source: {
+         type: 'geojson',
+         data: { "type": "FeatureCollection", "features": [] }
+       },
+       type: 'fill',
+       paint: {
+         'fill-color': '#fcf683',
+         'fill-opacity': 0.5
+       }
+
+});
+
+});
 
     //Click event goes here!
     map.on('click', function(e) {
       var eventLngLat = [e.lngLat.lng, e.lngLat.lat];
+      var featuresInBuffer = spatialJoin('OSM-water', searchRadius);
+      map.getSource('search-radius').setData(searchRadius);
       console.log(eventLngLat)
     });
 
